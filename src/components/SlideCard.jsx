@@ -28,7 +28,14 @@ export default function SlideCard({
         <View style={styles.tagsWrapper}>
           {tags.map((tag, key) => (
             <View mode="outlined" key={key} style={styles.chip}>
-              <Text style={styles.chipText}>{tag}</Text>
+              <Text
+                style={[
+                  styles.chipText,
+                  { fontFamily: fontsLoaded ? "Poppins_400Regular" : "" },
+                ]}
+              >
+                {tag}
+              </Text>
             </View>
           ))}
         </View>

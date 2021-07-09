@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { axios, colors, baseImageUrl, window } from "../helpers/constants";
 import CategoryBubble from "../components/CategoryBubble";
-import { useFonts, Poppins_400Regular } from "@expo-google-fonts/poppins";
+import {
+  useFonts,
+  Poppins_400Regular,
+  Poppins_600SemiBold,
+} from "@expo-google-fonts/poppins";
 import SlideCard from "./SlideCard";
 import { ActivityIndicator } from "react-native-paper";
 import StandaloneCard from "./StandaloneCard";
@@ -113,7 +117,7 @@ export default function HomeContent() {
           <Text
             style={[
               styles.textTitle,
-              { fontFamily: fontsLoaded ? "Poppins_400Regular" : "" },
+              { fontFamily: fontsLoaded ? "Poppins_600SemiBold" : "" },
             ]}
           >
             Categories
@@ -132,7 +136,7 @@ export default function HomeContent() {
           <Text
             style={[
               styles.textTitle,
-              { fontFamily: fontsLoaded ? "Poppins_400Regular" : "" },
+              { fontFamily: fontsLoaded ? "Poppins_600SemiBold" : "" },
             ]}
           >
             Most Popular
@@ -158,7 +162,7 @@ export default function HomeContent() {
           <Text
             style={[
               styles.textTitle,
-              { fontFamily: fontsLoaded ? "Poppins_400Regular" : "" },
+              { fontFamily: fontsLoaded ? "Poppins_600SemiBold" : "" },
             ]}
           >
             Top Rated
@@ -184,7 +188,7 @@ export default function HomeContent() {
           <Text
             style={[
               styles.textTitle,
-              { fontFamily: fontsLoaded ? "Poppins_400Regular" : "" },
+              { fontFamily: fontsLoaded ? "Poppins_600SemiBold" : "" },
             ]}
           >
             Family Entertainment
@@ -222,7 +226,7 @@ export default function HomeContent() {
           <Text
             style={[
               styles.textTitle,
-              { fontFamily: fontsLoaded ? "Poppins_400Regular" : "" },
+              { fontFamily: fontsLoaded ? "Poppins_600SemiBold" : "" },
             ]}
           >
             Action Films
@@ -248,7 +252,7 @@ export default function HomeContent() {
           <Text
             style={[
               styles.textTitle,
-              { fontFamily: fontsLoaded ? "Poppins_400Regular" : "" },
+              { fontFamily: fontsLoaded ? "Poppins_600SemiBold" : "" },
             ]}
           >
             Animation Movies
@@ -274,7 +278,7 @@ export default function HomeContent() {
           <Text
             style={[
               styles.textTitle,
-              { fontFamily: fontsLoaded ? "Poppins_400Regular" : "" },
+              { fontFamily: fontsLoaded ? "Poppins_600SemiBold" : "" },
             ]}
           >
             Comedy Movies
@@ -333,6 +337,7 @@ const styles = StyleSheet.create({
     color: colors.light,
     fontSize: 18,
     paddingLeft: 28,
+    marginTop: 24,
   },
   categoriesWrapper: {
     flexGrow: 0,
