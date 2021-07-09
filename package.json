@@ -8,6 +8,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@expo-google-fonts/poppins": "^0.2.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
     "@react-navigation/material-bottom-tabs": "^5.3.15",
     "@types/react-native": "^0.64.11",

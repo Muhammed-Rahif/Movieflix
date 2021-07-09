@@ -18,10 +18,10 @@ const ShowsScreen = () => <Shows />;
 export default function Navigation() {
   const [index, setIndex] = React.useState(0);
   const routes = [
-    { key: "home", title: "Home", icon: "home", color: colors.primary },
-    { key: "search", title: "Search", icon: "search", color: colors.primary },
-    { key: "movies", title: "Movies", icon: "film", color: colors.primary },
-    { key: "shows", title: "Shows", icon: "tv", color: colors.primary },
+    { key: "home", title: "•", icon: "home", color: colors.primary },
+    { key: "search", title: "•", icon: "search", color: colors.primary },
+    { key: "movies", title: "•", icon: "film", color: colors.primary },
+    { key: "shows", title: "•", icon: "tv", color: colors.primary },
   ];
 
   const renderScene = BottomNavigation.SceneMap({
@@ -37,6 +37,7 @@ export default function Navigation() {
       onIndexChange={setIndex}
       renderScene={renderScene}
       style={styles.bottomNavigation}
+      activeColor={colors.secondary}
     />
   );
 }

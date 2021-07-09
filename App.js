@@ -3,18 +3,21 @@ import { StyleSheet, View, StatusBar } from "react-native";
 import { Provider as PaperProvider } from "react-native-paper";
 import BottomNavigation from "./src/navigation/BottomNavigation";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
+import Contexts from "./src/contexts/Contexts";
 
 export default function App() {
   return (
-    <PaperProvider
-      settings={{
-        icon: (props) => <FontAwesomeIcon {...props} />,
-      }}
-    >
-      <View style={styles.container}>
-        <BottomNavigation />
-      </View>
-    </PaperProvider>
+    <Contexts>
+      <PaperProvider
+        settings={{
+          icon: (props) => <FontAwesomeIcon {...props} />,
+        }}
+      >
+        <View style={styles.container}>
+          <BottomNavigation />
+        </View>
+      </PaperProvider>
+    </Contexts>
   );
 }
 
