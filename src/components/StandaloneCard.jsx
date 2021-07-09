@@ -30,7 +30,7 @@ export default function StandaloneCard({
             { fontFamily: fontsLoaded ? "Poppins_600SemiBold" : "" },
           ]}
         >
-          {viewCount} Views, Released on : {releaseDate}
+          {viewCount} Views, Release date : {releaseDate}
         </Text>
         <Text
           style={[

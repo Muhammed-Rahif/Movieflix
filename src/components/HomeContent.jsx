@@ -349,7 +349,7 @@ const styles = StyleSheet.create({
     flexGrow: 0,
     paddingBottom: 10,
     width: window.width,
-    height: window.height * 0.5,
+    height: window.height * 0.65,
   },
   sliderScrollView: {
     paddingRight: 6,

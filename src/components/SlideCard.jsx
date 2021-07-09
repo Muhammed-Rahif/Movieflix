@@ -27,9 +27,9 @@ export default function SlideCard({
         <Card.Cover source={{ uri: posterSrc }} style={styles.cardImage} />
         <View style={styles.tagsWrapper}>
           {tags.map((tag, key) => (
-            <Chip mode="outlined" key={key} style={styles.chip}>
+            <View mode="outlined" key={key} style={styles.chip}>
               <Text style={styles.chipText}>{tag}</Text>
-            </Chip>
+            </View>
           ))}
         </View>
         <Text
@@ -65,11 +65,12 @@ export default function SlideCard({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    height: 450,
   },
   card: {
+    height: 450,
     margin: 12,
     padding: 12,
-    paddingBottom: 210,
     borderRadius: 22,
     backgroundColor: colors.secondary,
   },
@@ -91,7 +92,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 22,
     borderTopLeftRadius: 22,
     width: window.width * 0.6,
-    height: "100%",
+    height: 225,
   },
   date: {
     fontSize: 14,
@@ -109,11 +110,15 @@ const styles = StyleSheet.create({
     width: window.width * 0.6,
   },
   chipText: {
-    fontSize: 8,
+    fontSize: 9,
     color: colors.light,
   },
   chip: {
     margin: 1,
     backgroundColor: colors.transparent,
+    padding: 12,
+    paddingTop: 4,
+    paddingBottom: 4,
+    borderRadius: 22,
   },
 });
