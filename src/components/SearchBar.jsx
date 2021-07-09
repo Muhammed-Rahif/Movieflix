@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { colors } from "../helpers/constants";
-import { Searchbar, Text } from "react-native-paper";
+import { colors, window } from "../helpers/constants";
+import { Searchbar } from "react-native-paper";
 import { SearchContext } from "../contexts/Contexts";
 import { useContext } from "react";
 import { useFonts, Poppins_400Regular } from "@expo-google-fonts/poppins";
@@ -17,18 +17,18 @@ export default function SearchBar() {
     <View style={styles.searchBarWrapper}>
       <Searchbar
         style={styles.searchBar}
-        placeholder="Search your movie, tv show..."
+        placeholder="Search here..."
         inputStyle={[
           styles.searchBarInput,
-          {
-            fontFamily: fontsLoaded && "Poppins_400Regular",
-          },
+          { fontFamily: fontsLoaded ? "Poppins_400Regular" : "" },
         ]}
         clearIcon
         onChangeText={(query) => {
           setSearchFor(query);
         }}
         value={searchFor}
+        placeholderTextColor={colors.light}
+        iconColor={colors.light}
       />
     </View>
   );
@@ -37,16 +37,18 @@ export default function SearchBar() {
 const styles = StyleSheet.create({
   searchBarWrapper: {
     padding: 28,
-    top: 28,
+    paddingTop: 12,
+    top: window.height * 0.038,
+    marginBottom: 14,
+    zIndex: -2,
   },
   searchBar: {
     backgroundColor: colors.secondary,
     borderRadius: 28,
-    borderColor: "lightgrey",
-    borderStyle: "solid",
+    color: colors.light,
   },
   searchBarInput: {
-    color: colors.primary,
+    color: colors.light,
     fontSize: 14,
   },
 });
