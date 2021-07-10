@@ -10,6 +10,7 @@ import {
 import SlideCard from "./SlideCard";
 import { ActivityIndicator } from "react-native-paper";
 import StandaloneCard from "./StandaloneCard";
+import Axios from "axios";
 
 export default function HomeContent() {
   const [categories, setCategories] = useState([]);
@@ -29,66 +30,58 @@ export default function HomeContent() {
   });
 
   useEffect(() => {
-    axios
-      .get("genre/movie/list?api_key=2a4afa027d254745d262a88cce34ee48")
-      .then((response) => {
-        setCategories(response.data.genres);
-      });
-    axios
-      .get("movie/popular?api_key=2a4afa027d254745d262a88cce34ee48")
-      .then((response) => {
-        setPopular(response.data.results);
-      });
-    axios
-      .get("movie/top_rated?api_key=2a4afa027d254745d262a88cce34ee48")
-      .then((response) => {
-        setTopRated(response.data.results);
-      });
-    axios
-      .get(
+    Axios.all([
+      axios.get("genre/movie/list?api_key=2a4afa027d254745d262a88cce34ee48"),
+      axios.get("movie/popular?api_key=2a4afa027d254745d262a88cce34ee48"),
+      axios.get("movie/top_rated?api_key=2a4afa027d254745d262a88cce34ee48"),
+      axios.get(
         "discover/movie?api_key=2a4afa027d254745d262a88cce34ee48&with_genres=10751"
-      )
-      .then((response) => {
-        setFamilyEntertainment(response.data.results);
-      });
-    axios
-      .get(
+      ),
+      axios.get(
         "discover/movie?api_key=2a4afa027d254745d262a88cce34ee48&with_genres=16"
-      )
-      .then((response) => {
-        setAnimation(response.data.results);
-      });
-    axios
-      .get(
+      ),
+      axios.get(
         "discover/movie?api_key=2a4afa027d254745d262a88cce34ee48&with_genres=28"
-      )
-      .then((response) => {
-        setAction(response.data.results);
-        setRandomActionMovie(
-          response.data.results[
-            Math.floor(Math.random() * response.data.results.length + 1)
-          ]
-        );
-      });
-    axios
-      .get(
+      ),
+      axios.get(
         "discover/movie?api_key=2a4afa027d254745d262a88cce34ee48&with_genres=10752"
-      )
-      .then((response) => {
-        setRandomWarMovie(
-          response.data.results[
-            Math.floor(Math.random() * response.data.results.length + 1)
-          ]
-        );
-      });
-    axios
-      .get(
+      ),
+      axios.get(
         "discover/movie?api_key=2a4afa027d254745d262a88cce34ee48&with_genres=35"
+      ),
+    ]).then(
+      Axios.spread(
+        (
+          categories,
+          popular,
+          topRated,
+          familyEntertainment,
+          animation,
+          action,
+          warMovies,
+          comedies
+        ) => {
+          setCategories(categories.data.genres);
+          setPopular(popular.data.results);
+          setTopRated(topRated.data.results);
+          setFamilyEntertainment(familyEntertainment.data.results);
+          setAnimation(animation.data.results);
+          setAction(action.data.results);
+          setRandomActionMovie(
+            action.data.results[
+              Math.floor(Math.random() * action.data.results.length + 1)
+            ]
+          );
+          setRandomWarMovie(
+            warMovies.data.results[
+              Math.floor(Math.random() * warMovies.data.results.length + 1)
+            ]
+          );
+          setComedy(comedies.data.results);
+          setLoading(false);
+        }
       )
-      .then((response) => {
-        setComedy(response.data.results);
-        setLoading(false);
-      });
+    );
   }, []);
 
   const getGenresList = (genres) => {
