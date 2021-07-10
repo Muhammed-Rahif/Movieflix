@@ -25,6 +25,7 @@ export default function HomeContent() {
 
   let [fontsLoaded] = useFonts({
     Poppins_400Regular,
+    Poppins_600SemiBold,
   });
 
   useEffect(() => {
@@ -337,7 +338,6 @@ const styles = StyleSheet.create({
     color: colors.light,
     fontSize: 18,
     paddingLeft: 28,
-    marginTop: 24,
   },
   categoriesWrapper: {
     flexGrow: 0,
@@ -355,6 +355,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     width: window.width,
     height: window.height * 0.65,
+    marginBottom: 12,
   },
   sliderScrollView: {
     paddingRight: 6,
