@@ -29,6 +29,7 @@ export default function SearchBar() {
         value={searchFor}
         placeholderTextColor={colors.light}
         iconColor={colors.light}
+        clearIcon="close"
       />
     </View>
   );
@@ -37,10 +38,12 @@ export default function SearchBar() {
 const styles = StyleSheet.create({
   searchBarWrapper: {
     padding: 28,
+    paddingBottom: 12,
     paddingTop: 12,
-    top: window.height * 0.038,
-    marginBottom: 14,
-    zIndex: -2,
+    marginTop: window.height * 0.038,
+    marginBottom: 8,
+    borderRadius: 24,
+    color: colors.light,
   },
   searchBar: {
     backgroundColor: colors.secondary,
