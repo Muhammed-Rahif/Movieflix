@@ -100,6 +100,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 22,
     width: window.width * 0.6,
     height: 225,
+    backgroundColor: colors.primary,
   },
   date: {
     fontSize: 14,

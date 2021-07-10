@@ -14,14 +14,19 @@ import Axios from "axios";
 
 export default function HomeContent() {
   const [categories, setCategories] = useState([]);
-  const [popular, setPopular] = useState([]);
+  const [populars, setPopulars] = useState([]);
   const [topRated, setTopRated] = useState([]);
-  const [familyEntertainment, setFamilyEntertainment] = useState([]);
-  const [animation, setAnimation] = useState([]);
-  const [action, setAction] = useState([]);
-  const [comedy, setComedy] = useState([]);
+  const [familyEntertainments, setFamilyEntertainments] = useState([]);
+  const [animations, setAnimations] = useState([]);
+  const [actions, setActions] = useState([]);
+  const [comedies, setComedies] = useState([]);
   const [randomActionMovie, setRandomActionMovie] = useState();
   const [randomWarMovie, setRandomWarMovie] = useState();
+  const [wars, setWars] = useState([]);
+  const [musics, setMusics] = useState([]);
+  const [horrors, setHorrors] = useState([]);
+  const [fantasies, setFantasies] = useState([]);
+  const [randomFantasyMovie, setRandomFantasyMovie] = useState([]);
   const [loading, setLoading] = useState(true);
 
   let [fontsLoaded] = useFonts({
@@ -49,39 +54,67 @@ export default function HomeContent() {
       axios.get(
         "discover/movie?api_key=2a4afa027d254745d262a88cce34ee48&with_genres=35"
       ),
-    ]).then(
-      Axios.spread(
-        (
-          categories,
-          popular,
-          topRated,
-          familyEntertainment,
-          animation,
-          action,
-          warMovies,
-          comedies
-        ) => {
-          setCategories(categories.data.genres);
-          setPopular(popular.data.results);
-          setTopRated(topRated.data.results);
-          setFamilyEntertainment(familyEntertainment.data.results);
-          setAnimation(animation.data.results);
-          setAction(action.data.results);
-          setRandomActionMovie(
-            action.data.results[
-              Math.floor(Math.random() * action.data.results.length + 1)
-            ]
-          );
-          setRandomWarMovie(
-            warMovies.data.results[
-              Math.floor(Math.random() * warMovies.data.results.length + 1)
-            ]
-          );
-          setComedy(comedies.data.results);
-          setLoading(false);
-        }
+      axios.get(
+        "discover/movie?api_key=2a4afa027d254745d262a88cce34ee48&with_genres=10402"
+      ),
+      axios.get(
+        "discover/movie?api_key=2a4afa027d254745d262a88cce34ee48&with_genres=27"
+      ),
+      axios.get(
+        "discover/movie?api_key=2a4afa027d254745d262a88cce34ee48&with_genres=14"
+      ),
+    ])
+      .then(
+        Axios.spread(
+          (
+            categories,
+            populars,
+            topRated,
+            familyEntertainments,
+            animations,
+            actions,
+            warMovies,
+            comedies,
+            musicMovies,
+            horrorMovies,
+            fantasyMovies
+          ) => {
+            setCategories(categories.data.genres);
+            setPopulars(populars.data.results);
+            setTopRated(topRated.data.results);
+            setFamilyEntertainments(familyEntertainments.data.results);
+            setAnimations(animations.data.results);
+            setActions(actions.data.results);
+            setRandomActionMovie(
+              actions.data.results[
+                Math.floor(Math.random() * actions.data.results.length + 1)
+              ]
+            );
+            setWars(warMovies.data.results);
+            setRandomWarMovie(
+              warMovies.data.results[
+                Math.floor(Math.random() * warMovies.data.results.length + 1)
+              ]
+            );
+            setComedies(comedies.data.results);
+            setMusics(musicMovies.data.results);
+            setHorrors(horrorMovies.data.results);
+            setFantasies(fantasyMovies.data.results);
+            setRandomFantasyMovie(
+              fantasyMovies.data.results[
+                Math.floor(
+                  Math.random() * fantasyMovies.data.results.length + 1
+                )
+              ]
+            );
+            setLoading(false);
+          }
+        )
       )
-    );
+      .catch((err) => {
+        alert(err.message);
+        console.log({ err });
+      });
   }, []);
 
   const getGenresList = (genres) => {
@@ -126,7 +159,7 @@ export default function HomeContent() {
             ))}
           </ScrollView>
 
-          {/* Most popular movies slides*/}
+          {/* Most populars movies slides*/}
           <Text
             style={[
               styles.textTitle,
@@ -140,7 +173,7 @@ export default function HomeContent() {
             style={styles.slidesWrapper}
             contentContainerStyle={styles.sliderScrollView}
           >
-            {popular.map((movie, key) => (
+            {populars.map((movie, key) => (
               <SlideCard
                 title={movie.title}
                 posterSrc={baseImageUrl + movie.poster_path}
@@ -192,7 +225,7 @@ export default function HomeContent() {
             style={styles.slidesWrapper}
             contentContainerStyle={styles.sliderScrollView}
           >
-            {familyEntertainment.map((movie, key) => (
+            {familyEntertainments.map((movie, key) => (
               <SlideCard
                 title={movie.title}
                 posterSrc={baseImageUrl + movie.poster_path}
@@ -204,7 +237,7 @@ export default function HomeContent() {
             ))}
           </ScrollView>
 
-          {/* Standalone card for random animation movie */}
+          {/* Standalone card for random animations movie */}
           {randomActionMovie && (
             <StandaloneCard
               bannerImageSrc={baseImageUrl + randomActionMovie.backdrop_path}
@@ -230,7 +263,7 @@ export default function HomeContent() {
             style={styles.slidesWrapper}
             contentContainerStyle={styles.sliderScrollView}
           >
-            {action.map((movie, key) => (
+            {actions.map((movie, key) => (
               <SlideCard
                 title={movie.title}
                 posterSrc={baseImageUrl + movie.poster_path}
@@ -256,7 +289,7 @@ export default function HomeContent() {
             style={styles.slidesWrapper}
             contentContainerStyle={styles.sliderScrollView}
           >
-            {animation.map((movie, key) => (
+            {animations.map((movie, key) => (
               <SlideCard
                 title={movie.title}
                 posterSrc={baseImageUrl + movie.poster_path}
@@ -282,7 +315,7 @@ export default function HomeContent() {
             style={styles.slidesWrapper}
             contentContainerStyle={styles.sliderScrollView}
           >
-            {comedy.map((movie, key) => (
+            {comedies.map((movie, key) => (
               <SlideCard
                 title={movie.title}
                 posterSrc={baseImageUrl + movie.poster_path}
@@ -294,7 +327,7 @@ export default function HomeContent() {
             ))}
           </ScrollView>
 
-          {/* Standalone card for random war movie */}
+          {/* Standalone card for random wars movie */}
           {randomWarMovie && (
             <StandaloneCard
               bannerImageSrc={baseImageUrl + randomWarMovie.backdrop_path}
@@ -303,6 +336,96 @@ export default function HomeContent() {
               viewCount={randomWarMovie.vote_count}
               releaseDate={randomWarMovie.release_date}
               tags={getGenresList(randomWarMovie.genre_ids)}
+            />
+          )}
+
+          {/* War movies slides*/}
+          <Text
+            style={[
+              styles.textTitle,
+              { fontFamily: fontsLoaded ? "Poppins_600SemiBold" : "" },
+            ]}
+          >
+            War Movies
+          </Text>
+          <ScrollView
+            horizontal
+            style={styles.slidesWrapper}
+            contentContainerStyle={styles.sliderScrollView}
+          >
+            {wars.map((movie, key) => (
+              <SlideCard
+                title={movie.title}
+                posterSrc={baseImageUrl + movie.poster_path}
+                key={key}
+                rating={movie.vote_average}
+                date={movie.release_date}
+                tags={getGenresList(movie.genre_ids)}
+              />
+            ))}
+          </ScrollView>
+
+          {/* Music movies slides*/}
+          <Text
+            style={[
+              styles.textTitle,
+              { fontFamily: fontsLoaded ? "Poppins_600SemiBold" : "" },
+            ]}
+          >
+            Music
+          </Text>
+          <ScrollView
+            horizontal
+            style={styles.slidesWrapper}
+            contentContainerStyle={styles.sliderScrollView}
+          >
+            {musics.map((movie, key) => (
+              <SlideCard
+                title={movie.title}
+                posterSrc={baseImageUrl + movie.poster_path}
+                key={key}
+                rating={movie.vote_average}
+                date={movie.release_date}
+                tags={getGenresList(movie.genre_ids)}
+              />
+            ))}
+          </ScrollView>
+
+          {/* Horror movies slides*/}
+          <Text
+            style={[
+              styles.textTitle,
+              { fontFamily: fontsLoaded ? "Poppins_600SemiBold" : "" },
+            ]}
+          >
+            Horror Movies
+          </Text>
+          <ScrollView
+            horizontal
+            style={styles.slidesWrapper}
+            contentContainerStyle={styles.sliderScrollView}
+          >
+            {horrors.map((movie, key) => (
+              <SlideCard
+                title={movie.title}
+                posterSrc={baseImageUrl + movie.poster_path}
+                key={key}
+                rating={movie.vote_average}
+                date={movie.release_date}
+                tags={getGenresList(movie.genre_ids)}
+              />
+            ))}
+          </ScrollView>
+
+          {/* Standalone card for random fantasy movie */}
+          {randomFantasyMovie && (
+            <StandaloneCard
+              bannerImageSrc={baseImageUrl + randomFantasyMovie.backdrop_path}
+              title={randomFantasyMovie.title}
+              subtitle={randomFantasyMovie.overview}
+              viewCount={randomFantasyMovie.vote_count}
+              releaseDate={randomFantasyMovie.release_date}
+              tags={getGenresList(randomFantasyMovie.genre_ids)}
             />
           )}
         </>

@@ -79,6 +79,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 22,
     borderBottomLeftRadius: 22,
     width: "100%",
+    backgroundColor: colors.primary,
   },
   title: {
     fontSize: 24,
@@ -104,6 +105,8 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     flexDirection: "row",
     marginTop: 12,
+    maxWidth: window.width - 24,
+    flexWrap: "wrap",
   },
   chipText: {
     fontSize: 10,
