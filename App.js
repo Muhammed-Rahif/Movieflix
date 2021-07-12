@@ -4,6 +4,7 @@ import { Provider as PaperProvider } from "react-native-paper";
 import BottomNavigation from "./src/navigation/BottomNavigation";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import Contexts from "./src/contexts/Contexts";
+import AlertDialog from "./src/components/AlertDialog";
 
 export default function App() {
   return (
@@ -14,6 +15,7 @@ export default function App() {
         }}
       >
         <View style={styles.container}>
+          <AlertDialog />
           <BottomNavigation />
         </View>
       </PaperProvider>

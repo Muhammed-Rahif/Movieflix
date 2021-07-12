@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import React, { useContext, useEffect, useState } from "react";
+import { ScrollView, StyleSheet, Text, View, BackHandler } from "react-native";
 import { axios, colors, baseImageUrl, window } from "../helpers/constants";
 import CategoryBubble from "../components/CategoryBubble";
 import {
@@ -11,8 +11,11 @@ import SlideCard from "./SlideCard";
 import { ActivityIndicator } from "react-native-paper";
 import StandaloneCard from "./StandaloneCard";
 import Axios from "axios";
+import { AlertDialogContext } from "../contexts/Contexts";
 
 export default function HomeContent() {
+  const { setAlertDialog } = useContext(AlertDialogContext);
+
   const [categories, setCategories] = useState([]);
   const [populars, setPopulars] = useState([]);
   const [topRated, setTopRated] = useState([]);
@@ -112,7 +115,12 @@ export default function HomeContent() {
         )
       )
       .catch((err) => {
-        alert(err.message);
+        setAlertDialog({
+          open: true,
+          title: "Oops!",
+          text: err.message,
+          onPress: BackHandler.exitApp,
+        });
         console.log({ err });
       });
   }, []);

@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
-import { SearchContext } from "../contexts/Contexts";
+import { AlertDialogContext, SearchContext } from "../contexts/Contexts";
 import { axios, baseImageUrl, colors, window } from "../helpers/constants";
 import StandaloneCard from "./StandaloneCard";
 import Axios from "axios";
@@ -19,6 +19,7 @@ export default function SearchContent() {
   const [loadMoreLoading, setLoadMoreLoading] = useState(false);
 
   const { searchFor } = useContext(SearchContext);
+  const { setAlertDialog } = useContext(AlertDialogContext);
 
   let [fontsLoaded] = useFonts({
     Poppins_400Regular,
@@ -75,6 +76,13 @@ export default function SearchContent() {
           setResults(response.data.results);
           setLoadMoreLoading(false);
           setLoading(false);
+        })
+        .catch((err) => {
+          setAlertDialog({
+            open: true,
+            title: "Oops!",
+            text: err.message,
+          });
         });
     }
   }, [searchFor]);
@@ -93,6 +101,9 @@ export default function SearchContent() {
           setPage(page + 1);
           setLoadMoreLoading(false);
           setResults((results) => [...results, ...response.data.results]);
+        })
+        .catch((err) => {
+          setAlertDialog({ open: true, title: "Oops!", text: err.message });
         });
     }
   };
