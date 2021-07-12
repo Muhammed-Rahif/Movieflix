@@ -12,7 +12,7 @@ import { AirbnbRating } from "react-native-ratings";
 export default function SlideCard({
   title = "",
   posterSrc = "",
-  rating = "",
+  rating = 0,
   date = "",
   tags = [],
 }) {

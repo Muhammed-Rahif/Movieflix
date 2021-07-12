@@ -30,6 +30,7 @@ export default function SearchBar() {
         placeholderTextColor={colors.light}
         iconColor={colors.light}
         clearIcon="close"
+        autoFocus={false}
       />
     </View>
   );
@@ -51,6 +52,7 @@ const styles = StyleSheet.create({
     color: colors.light,
   },
   searchBarInput: {
+    backgroundColor: colors.secondary,
     color: colors.light,
     fontSize: 14,
   },

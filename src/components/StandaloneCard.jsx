@@ -7,14 +7,17 @@ import {
   Poppins_400Regular,
   Poppins_600SemiBold,
 } from "@expo-google-fonts/poppins";
+import { AirbnbRating } from "react-native-ratings";
 
 export default function StandaloneCard({
   bannerImageSrc = "",
   title = "",
   subtitle = "",
-  viewCount = 0,
+  voteCount = 0,
   releaseDate = "",
   tags = [],
+  rating = 0,
+  percentageLiked = 0,
 }) {
   let [fontsLoaded] = useFonts({
     Poppins_400Regular,
@@ -30,7 +33,7 @@ export default function StandaloneCard({
             { fontFamily: fontsLoaded ? "Poppins_600SemiBold" : "" },
           ]}
         >
-          {viewCount} Views, Release date : {releaseDate}
+          Release date : {releaseDate}
         </Text>
         <Text
           style={[
@@ -53,6 +56,22 @@ export default function StandaloneCard({
             </Chip>
           ))}
         </View>
+        <AirbnbRating
+          count={5}
+          defaultRating={rating / 2}
+          size={20}
+          showRating={false}
+          ratingContainerStyle={styles.starRating}
+          isDisabled
+        />
+        <Text
+          style={[
+            styles.simpleText,
+            { fontFamily: fontsLoaded ? "Poppins_600SemiBold" : "" },
+          ]}
+        >
+          {percentageLiked}% liked this film, {voteCount} Votes
+        </Text>
         <Text
           style={[
             styles.subtitle,
@@ -89,7 +108,7 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 14,
     color: colors.light,
-    marginTop: 12,
+    marginTop: 4,
     marginLeft: 6,
   },
   simpleText: {
@@ -115,5 +134,11 @@ const styles = StyleSheet.create({
   chip: {
     margin: 1,
     backgroundColor: colors.transparent,
+  },
+  starRating: {
+    marginTop: 4,
+    display: "flex",
+    alignItems: "flex-start",
+    justifyContent: "center",
   },
 });

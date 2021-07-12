@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { StyleSheet } from "react-native";
-import { BottomNavigation, Text } from "react-native-paper";
+import { BottomNavigation } from "react-native-paper";
 import { colors } from "../helpers/constants";
 import Home from "../screens/Home";
 import Search from "../screens/Search";
 import Movies from "../screens/Movies";
 import Shows from "../screens/Shows";
+import { SearchContext } from "../contexts/Contexts";
 
 const HomeScreen = () => <Home />;
 
@@ -17,12 +18,19 @@ const ShowsScreen = () => <Shows />;
 
 export default function Navigation() {
   const [index, setIndex] = React.useState(0);
+  const { searchFor } = useContext(SearchContext);
   const routes = [
     { key: "home", title: "•", icon: "home", color: colors.primary },
     { key: "search", title: "•", icon: "search", color: colors.primary },
     { key: "movies", title: "•", icon: "film", color: colors.primary },
     { key: "shows", title: "•", icon: "tv", color: colors.primary },
   ];
+
+  useEffect(() => {
+    if (searchFor && index !== 1) {
+      setIndex(1);
+    }
+  }, [searchFor]);
 
   const renderScene = BottomNavigation.SceneMap({
     home: HomeScreen,
@@ -38,6 +46,7 @@ export default function Navigation() {
       renderScene={renderScene}
       style={styles.bottomNavigation}
       activeColor={colors.secondary}
+      keyboardHidesNavigationBar={false}
     />
   );
 }

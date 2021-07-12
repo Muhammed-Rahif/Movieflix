@@ -243,9 +243,11 @@ export default function HomeContent() {
               bannerImageSrc={baseImageUrl + randomActionMovie.backdrop_path}
               title={randomActionMovie.title}
               subtitle={randomActionMovie.overview}
-              viewCount={randomActionMovie.vote_count}
+              voteCount={randomActionMovie.vote_count}
               releaseDate={randomActionMovie.release_date}
               tags={getGenresList(randomActionMovie.genre_ids)}
+              rating={randomActionMovie.vote_average}
+              percentageLiked={randomActionMovie.vote_average}
             />
           )}
 
@@ -333,9 +335,11 @@ export default function HomeContent() {
               bannerImageSrc={baseImageUrl + randomWarMovie.backdrop_path}
               title={randomWarMovie.title}
               subtitle={randomWarMovie.overview}
-              viewCount={randomWarMovie.vote_count}
+              voteCount={randomWarMovie.vote_count}
               releaseDate={randomWarMovie.release_date}
               tags={getGenresList(randomWarMovie.genre_ids)}
+              rating={randomWarMovie.vote_average}
+              percentageLiked={randomWarMovie.vote_average}
             />
           )}
 
@@ -423,9 +427,11 @@ export default function HomeContent() {
               bannerImageSrc={baseImageUrl + randomFantasyMovie.backdrop_path}
               title={randomFantasyMovie.title}
               subtitle={randomFantasyMovie.overview}
-              viewCount={randomFantasyMovie.vote_count}
+              voteCount={randomFantasyMovie.vote_count}
               releaseDate={randomFantasyMovie.release_date}
               tags={getGenresList(randomFantasyMovie.genre_ids)}
+              rating={randomFantasyMovie.vote_average}
+              percentageLiked={randomFantasyMovie.vote_average}
             />
           )}
         </>
