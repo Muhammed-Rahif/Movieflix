@@ -62,6 +62,8 @@ export default function SearchContent() {
 
   useEffect(() => {
     if (searchFor !== "" && searchFor !== null && searchFor !== false) {
+      setPage(2);
+      setResults([]);
       setLoading(true);
       axios
         .get(
@@ -70,16 +72,16 @@ export default function SearchContent() {
             "&page=1"
         )
         .then((response) => {
-          setResults([]);
           setResults(response.data.results);
+          setLoadMoreLoading(false);
           setLoading(false);
         });
     }
   }, [searchFor]);
 
   const loadMoreContents = () => {
-    alert(page);
     if (!loadMoreLoading) {
+      setLoadMoreLoading(true);
       axios
         .get(
           "https://api.themoviedb.org/3/search/movie?api_key=2a4afa027d254745d262a88cce34ee48&query=" +
@@ -113,7 +115,6 @@ export default function SearchContent() {
         style={styles.container}
         onScroll={({ nativeEvent }) => {
           if (isCloseToBottom(nativeEvent)) {
-            setLoadMoreLoading(true);
             loadMoreContents();
           }
         }}
@@ -169,7 +170,7 @@ export default function SearchContent() {
               Search for latest movies, tv shows..
             </Text>
           ) : null}
-          {!loadMoreLoading ? (
+          {loadMoreLoading && !loading && searchFor ? (
             <ActivityIndicator
               style={styles.loadMoreLoading}
               animating={loadMoreLoading}
@@ -213,7 +214,7 @@ const styles = StyleSheet.create({
     marginTop: window.height * 0.5 - 100,
   },
   loadMoreLoading: {
-    marginTop: 28,
-    marginBottom: 28,
+    paddingTop: 28,
+    paddingBottom: 28,
   },
 });
