@@ -6,7 +6,7 @@ import Home from "../screens/Home";
 import Search from "../screens/Search";
 import Movies from "../screens/Movies";
 import Shows from "../screens/Shows";
-import { SearchContext } from "../contexts/Contexts";
+import { NavigationIndexContext, SearchContext } from "../contexts/Contexts";
 
 const HomeScreen = () => <Home />;
 
@@ -17,7 +17,9 @@ const MoviesScreen = () => <Movies />;
 const ShowsScreen = () => <Shows />;
 
 export default function Navigation() {
-  const [index, setIndex] = React.useState(0);
+  const { navigationIndex, setNavigationIndex } = useContext(
+    NavigationIndexContext
+  );
   const { searchFor } = useContext(SearchContext);
   const routes = [
     { key: "home", title: "•", icon: "home", color: colors.primary },
@@ -27,8 +29,8 @@ export default function Navigation() {
   ];
 
   useEffect(() => {
-    if (searchFor && index !== 1) {
-      setIndex(1);
+    if (searchFor && navigationIndex !== 1) {
+      setNavigationIndex(1);
     }
   }, [searchFor]);
 
@@ -41,8 +43,8 @@ export default function Navigation() {
 
   return (
     <BottomNavigation
-      navigationState={{ index, routes }}
-      onIndexChange={setIndex}
+      navigationState={{ index: navigationIndex, routes }}
+      onIndexChange={setNavigationIndex}
       renderScene={renderScene}
       style={styles.bottomNavigation}
       activeColor={colors.secondary}
