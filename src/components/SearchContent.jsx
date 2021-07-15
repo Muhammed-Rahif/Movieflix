@@ -34,6 +34,13 @@ export default function SearchContent() {
       Axios.spread((movieGenres, showsGenres) => {
         setCategories([...movieGenres.data.genres, ...showsGenres.data.genres]);
         setLoading(false);
+        if ([...resultMovies.data.results, ...resultTvShows.data.results]) {
+          setAlertDialog({
+            open: true,
+            title: "No more!",
+            text: "Sorry. We didn't find any results for your search.",
+          });
+        }
       })
     );
   }, [results]);
@@ -66,17 +73,28 @@ export default function SearchContent() {
       setPage(2);
       setResults([]);
       setLoading(true);
-      axios
-        .get(
+      Axios.all([
+        axios.get(
           "https://api.themoviedb.org/3/search/movie?api_key=2a4afa027d254745d262a88cce34ee48&query=" +
             searchFor +
             "&page=1"
+        ),
+        axios.get(
+          "https://api.themoviedb.org/3/search/tv?api_key=2a4afa027d254745d262a88cce34ee48&query=" +
+            searchFor +
+            "&page=1"
+        ),
+      ])
+        .then(
+          Axios.spread((resultMovies, resultTvShows) => {
+            setResults([
+              ...resultMovies.data.results,
+              ...resultTvShows.data.results,
+            ]);
+            setLoadMoreLoading(false);
+            setLoading(false);
+          })
         )
-        .then((response) => {
-          setResults(response.data.results);
-          setLoadMoreLoading(false);
-          setLoading(false);
-        })
         .catch((err) => {
           setAlertDialog({
             open: true,
@@ -90,18 +108,38 @@ export default function SearchContent() {
   const loadMoreContents = () => {
     if (!loadMoreLoading) {
       setLoadMoreLoading(true);
-      axios
-        .get(
+      Axios.all([
+        axios.get(
           "https://api.themoviedb.org/3/search/movie?api_key=2a4afa027d254745d262a88cce34ee48&query=" +
             searchFor +
             "&page=" +
             page
+        ),
+        axios.get(
+          "https://api.themoviedb.org/3/search/tv?api_key=2a4afa027d254745d262a88cce34ee48&query=" +
+            searchFor +
+            "&page=" +
+            page
+        ),
+      ])
+        .then(
+          Axios.spread((resultMovies, resultTvShows) => {
+            setPage(page + 1);
+            setLoadMoreLoading(false);
+            setResults((results) => [
+              ...results,
+              ...resultMovies.data.results,
+              ...resultTvShows.data.results,
+            ]);
+            if ([...resultMovies.data.results, ...resultTvShows.data.results]) {
+              setAlertDialog({
+                open: true,
+                title: "No more!",
+                text: "No more results found.",
+              });
+            }
+          })
         )
-        .then((response) => {
-          setPage(page + 1);
-          setLoadMoreLoading(false);
-          setResults((results) => [...results, ...response.data.results]);
-        })
         .catch((err) => {
           setAlertDialog({ open: true, title: "Oops!", text: err.message });
         });
@@ -133,14 +171,23 @@ export default function SearchContent() {
         {searchFor
           ? results.map((result, key) => (
               <StandaloneCard
-                bannerImageSrc={baseImageUrl + result.backdrop_path}
-                releaseDate={result.release_date}
+                bannerImageSrc={
+                  baseImageUrl + result.backdrop_path
+                    ? result.backdrop_path
+                    : result.poster_path
+                }
+                releaseDate={
+                  result.release_date
+                    ? result.release_date
+                    : result.first_air_date
+                }
                 subtitle={result.overview}
                 tags={getGenresList(result.genre_ids)}
-                title={result.title}
+                title={result.title ? result.title : result.original_name}
                 voteCount={result.vote_count}
                 rating={result.vote_average}
                 percentageLiked={result.vote_average * 10}
+                mediaType={result.mediaType}
                 key={key}
               />
             ))

@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     borderRadius: 24,
     color: colors.light,
+    zIndex: 9,
   },
   searchBar: {
     backgroundColor: colors.secondary,

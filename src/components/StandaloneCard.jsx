@@ -8,6 +8,7 @@ import {
   Poppins_600SemiBold,
 } from "@expo-google-fonts/poppins";
 import { AirbnbRating } from "react-native-ratings";
+import { useEffect } from "react";
 
 export default function StandaloneCard({
   bannerImageSrc = "",
@@ -18,6 +19,7 @@ export default function StandaloneCard({
   tags = [],
   rating = 0,
   percentageLiked = 0,
+  mediaType = "Movie",
 }) {
   let [fontsLoaded] = useFonts({
     Poppins_400Regular,
@@ -70,7 +72,9 @@ export default function StandaloneCard({
             { fontFamily: fontsLoaded ? "Poppins_600SemiBold" : "" },
           ]}
         >
-          {percentageLiked}% liked this film, {voteCount} Votes
+          Media type : {mediaType}
+          {"\n"}
+          {percentageLiked}% liked this {mediaType}, {voteCount} Votes,
         </Text>
         <Text
           style={[
