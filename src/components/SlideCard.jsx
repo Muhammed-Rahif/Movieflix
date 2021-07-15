@@ -1,6 +1,12 @@
-import React from "react";
-import { StyleSheet, Text, TouchableNativeFeedback, View } from "react-native";
-import { Card, Chip } from "react-native-paper";
+import React, { useState } from "react";
+import {
+  ImageBackground,
+  StyleSheet,
+  Text,
+  TouchableNativeFeedback,
+  View,
+} from "react-native";
+import { ActivityIndicator, Card, Chip } from "react-native-paper";
 import { colors, window } from "../helpers/constants";
 import {
   useFonts,
@@ -8,6 +14,7 @@ import {
   Poppins_400Regular,
 } from "@expo-google-fonts/poppins";
 import { AirbnbRating } from "react-native-ratings";
+import { Image } from "react-native";
 
 export default function SlideCard({
   title = "",
@@ -16,6 +23,8 @@ export default function SlideCard({
   date = "",
   tags = [],
 }) {
+  const [imageLoading, setImageLoading] = useState(true);
+
   let [fontsLoaded] = useFonts({
     Poppins_600SemiBold,
     Poppins_400Regular,
@@ -24,7 +33,28 @@ export default function SlideCard({
   return (
     <TouchableNativeFeedback>
       <Card style={styles.card}>
-        <Card.Cover source={{ uri: posterSrc }} style={styles.cardImage} />
+        {/* <Card.Cover source={{ uri: posterSrc }} style={styles.cardImage} /> */}
+        <ImageBackground
+          source={{ uri: posterSrc }}
+          imageStyle={styles.cardImage}
+          style={styles.cardImage}
+          onLoadStart={() => {
+            setImageLoading(true);
+          }}
+          onLoadEnd={() => {
+            setImageLoading(false);
+          }}
+        >
+          <View style={styles.loadingWrapper}>
+            {imageLoading ? (
+              <ActivityIndicator
+                animating={imageLoading}
+                style={styles.loading}
+                color={colors.secondary}
+              />
+            ) : null}
+          </View>
+        </ImageBackground>
         <View style={styles.tagsWrapper}>
           {tags.map((tag, key) => (
             <View mode="outlined" key={key} style={styles.chip}>
@@ -128,5 +158,14 @@ const styles = StyleSheet.create({
     paddingTop: 4,
     paddingBottom: 4,
     borderRadius: 22,
+  },
+  loadingWrapper: {
+    width: "100%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  loading: {
+    marginTop: 100.5,
   },
 });

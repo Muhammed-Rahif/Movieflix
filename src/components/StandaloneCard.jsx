@@ -1,6 +1,12 @@
-import React from "react";
-import { StyleSheet, Text, TouchableNativeFeedback, View } from "react-native";
-import { Card, Chip } from "react-native-paper";
+import React, { useState } from "react";
+import {
+  ImageBackground,
+  StyleSheet,
+  Text,
+  TouchableNativeFeedback,
+  View,
+} from "react-native";
+import { ActivityIndicator, Card, Chip } from "react-native-paper";
 import { colors, window } from "../helpers/constants";
 import {
   useFonts,
@@ -21,6 +27,8 @@ export default function StandaloneCard({
   percentageLiked = 0,
   mediaType = "Movie",
 }) {
+  const [imageLoading, setImageLoading] = useState(true);
+
   let [fontsLoaded] = useFonts({
     Poppins_400Regular,
     Poppins_600SemiBold,
@@ -45,12 +53,33 @@ export default function StandaloneCard({
         >
           {title}
         </Text>
-        <Card.Cover
+        {/* <Card.Cover
           style={styles.cardImage}
           source={{
             uri: bannerImageSrc,
           }}
-        />
+        /> */}
+        <ImageBackground
+          source={{ uri: bannerImageSrc }}
+          imageStyle={styles.cardImage}
+          style={styles.cardImage}
+          onLoadStart={() => {
+            setImageLoading(true);
+          }}
+          onLoadEnd={() => {
+            setImageLoading(false);
+          }}
+        >
+          <View style={styles.loadingWrapper}>
+            {imageLoading ? (
+              <ActivityIndicator
+                animating={imageLoading}
+                style={styles.loading}
+                color={colors.secondary}
+              />
+            ) : null}
+          </View>
+        </ImageBackground>
         <View style={styles.tagsWrapper}>
           {tags.map((tag, key) => (
             <Chip mode="outlined" key={key} style={styles.chip}>
@@ -103,6 +132,7 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 22,
     width: "100%",
     backgroundColor: colors.primary,
+    height: 180,
   },
   title: {
     fontSize: 24,
@@ -144,5 +174,14 @@ const styles = StyleSheet.create({
     display: "flex",
     alignItems: "flex-start",
     justifyContent: "center",
+  },
+  loadingWrapper: {
+    width: "100%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  loading: {
+    marginTop: 80,
   },
 });
