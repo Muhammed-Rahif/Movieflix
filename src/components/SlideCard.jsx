@@ -44,6 +44,9 @@ export default function SlideCard({
           onLoadEnd={() => {
             setImageLoading(false);
           }}
+          onLoad={() => {
+            setImageLoading(false);
+          }}
         >
           <View style={styles.loadingWrapper}>
             {imageLoading ? (

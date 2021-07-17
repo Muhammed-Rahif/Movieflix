@@ -69,6 +69,9 @@ export default function StandaloneCard({
           onLoadEnd={() => {
             setImageLoading(false);
           }}
+          onLoad={() => {
+            setImageLoading(false);
+          }}
         >
           <View style={styles.loadingWrapper}>
             {imageLoading ? (
