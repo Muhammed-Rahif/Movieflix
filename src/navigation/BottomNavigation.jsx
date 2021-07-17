@@ -22,10 +22,30 @@ export default function Navigation() {
   );
   const { searchFor } = useContext(SearchContext);
   const routes = [
-    { key: "home", title: "•", icon: "home", color: colors.primary },
-    { key: "search", title: "•", icon: "search", color: colors.primary },
-    { key: "movies", title: "•", icon: "film", color: colors.primary },
-    { key: "shows", title: "•", icon: "tv", color: colors.primary },
+    {
+      key: "home",
+      title: "•",
+      icon: require("../../assets/Icons/home.png"),
+      color: colors.primary,
+    },
+    {
+      key: "search",
+      title: "•",
+      icon: require("../../assets/Icons/search.png"),
+      color: colors.primary,
+    },
+    {
+      key: "movies",
+      title: "•",
+      icon: require("../../assets/Icons/movie.png"),
+      color: colors.primary,
+    },
+    {
+      key: "shows",
+      title: "•",
+      icon: require("../../assets/Icons/television.png"),
+      color: colors.primary,
+    },
   ];
 
   useEffect(() => {
