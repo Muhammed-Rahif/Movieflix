@@ -9,8 +9,13 @@ import { axios, colors, window } from "../helpers/constants";
 import SelectableChips from "./SelectableChips";
 import { useEffect } from "react";
 import { ActivityIndicator } from "react-native-paper";
+import { getMovieGenresList } from "../helpers/helper";
+import { AlertDialogContext } from "../contexts/Contexts";
+import { useContext } from "react";
 
 export default function MoviesContent() {
+  const { setAlertDialog } = useContext(AlertDialogContext);
+
   const [genres, setGenres] = useState([]);
 
   let [fontsLoaded] = useFonts({
@@ -19,11 +24,17 @@ export default function MoviesContent() {
   });
 
   useEffect(() => {
-    axios
-      .get("genre/movie/list?api_key=2a4afa027d254745d262a88cce34ee48")
-      .then((response) => {
-        response.data.genres.map((itm) => {
+    getMovieGenresList()
+      .then((results) => {
+        results.map((itm) => {
           setGenres((genres) => [...genres, itm.name]);
+        });
+      })
+      .catch((err) => {
+        setAlertDialog({
+          open: true,
+          title: "Oops!",
+          text: err.message,
         });
       });
   }, []);
@@ -42,7 +53,7 @@ export default function MoviesContent() {
         {genres.length === 0 ? (
           <ActivityIndicator animating color={colors.secondary} />
         ) : null}
-        <SelectableChips chipsArray={genres} />
+        <SelectableChips chipsArray={genres.length === 0 ? [] : genres} />
       </View>
     </View>
   );

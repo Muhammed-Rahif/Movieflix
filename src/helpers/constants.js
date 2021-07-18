@@ -5,6 +5,7 @@ const axios = Axios.create({
   baseURL: "https://api.themoviedb.org/3/",
 });
 
+const API_KEY = "2a4afa027d254745d262a88cce34ee48";
 const baseImageUrl = "https://image.tmdb.org/t/p/original";
 
 const colors = {
@@ -20,4 +21,4 @@ const colors = {
 const window = Dimensions.get("window");
 const screen = Dimensions.get("screen");
 
-export { colors, window, screen, axios, baseImageUrl };
+export { colors, window, screen, axios, baseImageUrl, API_KEY };

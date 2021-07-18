@@ -12,6 +12,19 @@ import { ActivityIndicator } from "react-native-paper";
 import StandaloneCard from "./StandaloneCard";
 import Axios from "axios";
 import { AlertDialogContext } from "../contexts/Contexts";
+import {
+  getActionMovies,
+  getAnimationMovies,
+  getComedyMovies,
+  getFamilyEntertainmentMovies,
+  getFantasyMovies,
+  getHorrorMovies,
+  getMovieGenresList,
+  getMusicMovies,
+  getPopularMovies,
+  getTopRatedMovies,
+  getWarMovies,
+} from "../helpers/helper";
 
 export default function HomeContent() {
   const { setAlertDialog } = useContext(AlertDialogContext);
@@ -38,82 +51,44 @@ export default function HomeContent() {
   });
 
   useEffect(() => {
-    Axios.all([
-      axios.get("genre/movie/list?api_key=2a4afa027d254745d262a88cce34ee48"),
-      axios.get("movie/popular?api_key=2a4afa027d254745d262a88cce34ee48"),
-      axios.get("movie/top_rated?api_key=2a4afa027d254745d262a88cce34ee48"),
-      axios.get(
-        "discover/movie?api_key=2a4afa027d254745d262a88cce34ee48&with_genres=10751"
-      ),
-      axios.get(
-        "discover/movie?api_key=2a4afa027d254745d262a88cce34ee48&with_genres=16"
-      ),
-      axios.get(
-        "discover/movie?api_key=2a4afa027d254745d262a88cce34ee48&with_genres=28"
-      ),
-      axios.get(
-        "discover/movie?api_key=2a4afa027d254745d262a88cce34ee48&with_genres=10752"
-      ),
-      axios.get(
-        "discover/movie?api_key=2a4afa027d254745d262a88cce34ee48&with_genres=35"
-      ),
-      axios.get(
-        "discover/movie?api_key=2a4afa027d254745d262a88cce34ee48&with_genres=10402"
-      ),
-      axios.get(
-        "discover/movie?api_key=2a4afa027d254745d262a88cce34ee48&with_genres=27"
-      ),
-      axios.get(
-        "discover/movie?api_key=2a4afa027d254745d262a88cce34ee48&with_genres=14"
-      ),
+    Promise.all([
+      getMovieGenresList(),
+      getPopularMovies(),
+      getTopRatedMovies(),
+      getFamilyEntertainmentMovies(),
+      getAnimationMovies(),
+      getActionMovies(),
+      getWarMovies(),
+      getComedyMovies(),
+      getMusicMovies(),
+      getHorrorMovies(),
+      getFantasyMovies(),
     ])
-      .then(
-        Axios.spread(
-          (
-            categories,
-            populars,
-            topRated,
-            familyEntertainments,
-            animations,
-            actions,
-            warMovies,
-            comedies,
-            musicMovies,
-            horrorMovies,
-            fantasyMovies
-          ) => {
-            setCategories(categories.data.genres);
-            setPopulars(populars.data.results);
-            setTopRated(topRated.data.results);
-            setFamilyEntertainments(familyEntertainments.data.results);
-            setAnimations(animations.data.results);
-            setActions(actions.data.results);
-            setRandomActionMovie(
-              actions.data.results[
-                Math.floor(Math.random() * actions.data.results.length + 1)
-              ]
-            );
-            setWars(warMovies.data.results);
-            setRandomWarMovie(
-              warMovies.data.results[
-                Math.floor(Math.random() * warMovies.data.results.length + 1)
-              ]
-            );
-            setComedies(comedies.data.results);
-            setMusics(musicMovies.data.results);
-            setHorrors(horrorMovies.data.results);
-            setFantasies(fantasyMovies.data.results);
-            setRandomFantasyMovie(
-              fantasyMovies.data.results[
-                Math.floor(
-                  Math.random() * fantasyMovies.data.results.length + 1
-                )
-              ]
-            );
-            setLoading(false);
-          }
-        )
-      )
+      .then((resultArray) => {
+        setCategories(resultArray[0]);
+        setPopulars(resultArray[1]);
+        setTopRated(resultArray[2]);
+        setFamilyEntertainments(resultArray[3]);
+        setAnimations(resultArray[4]);
+        setActions(resultArray[5]);
+        setRandomActionMovie(
+          resultArray[5][Math.floor(Math.random() * resultArray[5].length + 1)]
+        );
+        setWars(resultArray[6]);
+        setRandomWarMovie(
+          resultArray[6][Math.floor(Math.random() * resultArray[6].length + 1)]
+        );
+        setComedies(resultArray[7]);
+        setMusics(resultArray[8]);
+        setHorrors(resultArray[9]);
+        setFantasies(resultArray[10]);
+        setRandomFantasyMovie(
+          resultArray[10][
+            Math.floor(Math.random() * resultArray[10].length + 1)
+          ]
+        );
+        setLoading(false);
+      })
       .catch((err) => {
         setAlertDialog({
           open: true,

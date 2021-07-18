@@ -21,7 +21,7 @@ export default function SelectableChips({ chipsArray = [] }) {
 
   useEffect(() => {
     setChips(chipsArray);
-  }, []);
+  }, [chipsArray, setChips]);
 
   return (
     <ScrollView

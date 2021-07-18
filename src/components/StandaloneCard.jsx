@@ -106,7 +106,7 @@ export default function StandaloneCard({
         >
           Media type : {mediaType}
           {"\n"}
-          {percentageLiked}% liked this {mediaType}, {voteCount} Votes,
+          {percentageLiked}% liked this {mediaType}, {voteCount} Votes
         </Text>
         <Text
           style={[

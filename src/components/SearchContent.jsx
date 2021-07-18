@@ -1,6 +1,10 @@
 import React, { useContext, useState, useEffect } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
-import { AlertDialogContext, SearchContext } from "../contexts/Contexts";
+import {
+  AlertDialogContext,
+  NavigationIndexContext,
+  SearchContext,
+} from "../contexts/Contexts";
 import { axios, baseImageUrl, colors, window } from "../helpers/constants";
 import StandaloneCard from "./StandaloneCard";
 import Axios from "axios";
@@ -10,6 +14,12 @@ import {
   Poppins_400Regular,
   Poppins_600SemiBold,
 } from "@expo-google-fonts/poppins";
+import {
+  getMovieGenresList,
+  getTvShowsGenresList,
+  searchForMovie,
+  searchForTvShow,
+} from "../helpers/helper";
 
 export default function SearchContent() {
   const [results, setResults] = useState([]);
@@ -27,29 +37,24 @@ export default function SearchContent() {
   });
 
   useEffect(() => {
-    Axios.all([
-      axios.get("genre/movie/list?api_key=2a4afa027d254745d262a88cce34ee48"),
-      axios.get("genre/tv/list?api_key=2a4afa027d254745d262a88cce34ee48"),
-    ]).then(
-      Axios.spread((movieGenres, showsGenres) => {
-        setCategories([...movieGenres.data.genres, ...showsGenres.data.genres]);
+    Promise.all([getMovieGenresList(), getTvShowsGenresList()])
+      .then((resultArray) => {
+        setCategories([...resultArray[0], ...resultArray[1]]);
         setLoading(false);
-        if ([...resultMovies.data.results, ...resultTvShows.data.results]) {
-          setAlertDialog({
-            open: true,
-            title: "No more!",
-            text: "Sorry. We didn't find any results for your search.",
-          });
-        }
       })
-    );
+      .catch((err) => {
+        setAlertDialog({
+          open: true,
+          title: "Oops!",
+          text: err.message,
+        });
+      });
   }, [results]);
 
   const getGenresList = (genres) => {
     let genreNames = [];
     categories.map((category) => {
       genres.map((genre) => {
-        console.log({ category });
         if (category.id === genre) {
           let ifExist;
           for (let existingGenre of genreNames) {
@@ -73,28 +78,12 @@ export default function SearchContent() {
       setPage(2);
       setResults([]);
       setLoading(true);
-      Axios.all([
-        axios.get(
-          "https://api.themoviedb.org/3/search/movie?api_key=2a4afa027d254745d262a88cce34ee48&query=" +
-            searchFor +
-            "&page=1"
-        ),
-        axios.get(
-          "https://api.themoviedb.org/3/search/tv?api_key=2a4afa027d254745d262a88cce34ee48&query=" +
-            searchFor +
-            "&page=1"
-        ),
-      ])
-        .then(
-          Axios.spread((resultMovies, resultTvShows) => {
-            setResults([
-              ...resultMovies.data.results,
-              ...resultTvShows.data.results,
-            ]);
-            setLoadMoreLoading(false);
-            setLoading(false);
-          })
-        )
+      Promise.all([searchForMovie(searchFor, 1), searchForTvShow(searchFor, 1)])
+        .then((resultArray) => {
+          setResults([...resultArray[0], ...resultArray[1]]);
+          setLoadMoreLoading(false);
+          setLoading(false);
+        })
         .catch((err) => {
           setAlertDialog({
             open: true,
@@ -108,44 +97,25 @@ export default function SearchContent() {
   const loadMoreContents = () => {
     if (!loadMoreLoading) {
       setLoadMoreLoading(true);
-      Axios.all([
-        axios.get(
-          "https://api.themoviedb.org/3/search/movie?api_key=2a4afa027d254745d262a88cce34ee48&query=" +
-            searchFor +
-            "&page=" +
-            page
-        ),
-        axios.get(
-          "https://api.themoviedb.org/3/search/tv?api_key=2a4afa027d254745d262a88cce34ee48&query=" +
-            searchFor +
-            "&page=" +
-            page
-        ),
+      Promise.all([
+        searchForMovie(searchFor, page),
+        searchForTvShow(searchFor, page),
       ])
-        .then(
-          Axios.spread((resultMovies, resultTvShows) => {
-            setPage(page + 1);
-            setLoadMoreLoading(false);
-            setResults((results) => [
-              ...results,
-              ...resultMovies.data.results,
-              ...resultTvShows.data.results,
-            ]);
-            if ([...resultMovies.data.results, ...resultTvShows.data.results]) {
-              setAlertDialog({
-                open: true,
-                title: "No more!",
-                text: "No more results found.",
-              });
-            }
-          })
-        )
+        .then((resultArray) => {
+          setPage(page + 1);
+          setLoadMoreLoading(false);
+          setResults((results) => [
+            ...results,
+            ...resultArray[0],
+            ...resultArray[1],
+          ]);
+        })
         .catch((err) => {
           setAlertDialog({ open: true, title: "Oops!", text: err.message });
         });
     }
   };
-
+  // Add a label when no results
   const isCloseToBottom = ({
     layoutMeasurement,
     contentOffset,
@@ -187,7 +157,7 @@ export default function SearchContent() {
                 voteCount={result.vote_count}
                 rating={result.vote_average}
                 percentageLiked={result.vote_average * 10}
-                mediaType={result.mediaType}
+                mediaType={result.title ? "Movie" : "TV Show"}
                 key={key}
               />
             ))
@@ -226,6 +196,19 @@ export default function SearchContent() {
               ]}
             >
               Search for latest movies, tv shows..
+            </Text>
+          ) : null}
+          {!loading && !loadMoreLoading && searchFor && results.length < 1 ? (
+            <Text
+              style={[
+                styles.defaultText,
+                {
+                  fontFamily: fontsLoaded ? "Poppins_600SemiBold" : "",
+                  opacity: 1,
+                },
+              ]}
+            >
+              🤷‍♂️️ No results found.
             </Text>
           ) : null}
           {loadMoreLoading && !loading && searchFor ? (
