@@ -417,6 +417,32 @@ export default function HomeContent() {
               percentageLiked={randomFantasyMovie.vote_average}
             />
           )}
+
+          {/* Fantasy movies slides*/}
+          <Text
+            style={[
+              styles.textTitle,
+              { fontFamily: fontsLoaded ? "Poppins_600SemiBold" : "" },
+            ]}
+          >
+            Fantasy Movies
+          </Text>
+          <ScrollView
+            horizontal
+            style={styles.slidesWrapper}
+            contentContainerStyle={styles.sliderScrollView}
+          >
+            {fantasies.map((movie, key) => (
+              <SlideCard
+                title={movie.title}
+                posterSrc={baseImageUrl + movie.poster_path}
+                key={key}
+                rating={movie.vote_average}
+                date={movie.release_date}
+                tags={getGenresList(movie.genre_ids)}
+              />
+            ))}
+          </ScrollView>
         </>
       ) : (
         <View style={styles.loadingWrapper}>

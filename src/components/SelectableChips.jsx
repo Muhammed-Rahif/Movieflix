@@ -65,7 +65,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     paddingLeft: 12,
     paddingRight: 12,
-    marginTop: 12,
   },
   scrollView: {
     display: "flex",

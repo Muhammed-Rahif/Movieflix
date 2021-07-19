@@ -26,6 +26,19 @@ const getTvShowsGenresList = () => {
   });
 };
 
+const getUpcomingMovies = (page = 1) => {
+  return new Promise((resolve, reject) => {
+    axios
+      .get(`movie/upcoming?api_key=${API_KEY}&page=${page}`)
+      .then((response) => {
+        resolve(response.data.results);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+};
+
 const getPopularMovies = (page = 1) => {
   return new Promise((resolve, reject) => {
     axios
@@ -185,6 +198,7 @@ const searchForTvShow = (query = "", page = 1) => {
 export {
   getMovieGenresList,
   getTvShowsGenresList,
+  getUpcomingMovies,
   getPopularMovies,
   getTopRatedMovies,
   getFamilyEntertainmentMovies,
