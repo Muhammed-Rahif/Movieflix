@@ -67,14 +67,16 @@ export default function MoviesContent() {
         style={styles.imageCardsWrapper}
         contentContainerStyle={styles.imageCardsContainer}
       >
-        <Text
-          style={[
-            styles.textTitle,
-            { fontFamily: fontsLoaded ? "Poppins_600SemiBold" : "" },
-          ]}
-        >
-          Upcoming Movies
-        </Text>
+        {categories.length !== 0 ? (
+          <Text
+            style={[
+              styles.textTitle,
+              { fontFamily: fontsLoaded ? "Poppins_600SemiBold" : "" },
+            ]}
+          >
+            Upcoming Movies
+          </Text>
+        ) : null}
         {upcomingMovies.map((movie, key) => (
           <ImageCard imageSrc={baseImageUrl + movie.poster_path} key={key} />
         ))}
