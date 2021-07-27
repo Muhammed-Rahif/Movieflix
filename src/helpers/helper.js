@@ -195,7 +195,22 @@ const searchForTvShow = (query = "", page = 1) => {
   });
 };
 
+// Get movies by page
+const getMovies = (page = 1) => {
+  return new Promise((resolve, reject) => {
+    axios
+      .get(`discover/movie?api_key=${API_KEY}&page=${page}`)
+      .then((response) => {
+        resolve(response.data.results);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+};
+
 export {
+  getMovies,
   getMovieGenresList,
   getTvShowsGenresList,
   getUpcomingMovies,
