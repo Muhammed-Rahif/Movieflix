@@ -12,6 +12,7 @@ import { ActivityIndicator } from "react-native-paper";
 import {
   getMovieGenresList,
   getMovies,
+  getTvShows,
   getUpcomingMovies,
 } from "../helpers/helper";
 import { AlertDialogContext } from "../contexts/Contexts";
@@ -21,8 +22,7 @@ export default function MoviesContent() {
   const { setAlertDialog } = useContext(AlertDialogContext);
 
   const [categories, setCategories] = useState([]);
-  const [upcomingMovies, setUpcomingMovies] = useState([]);
-  const [movies, setMovies] = useState([]);
+  const [shows, setShows] = useState([]);
   const [page, setPage] = useState(2);
   const [loadingMore, setLoadingMore] = useState(false);
 
@@ -32,12 +32,12 @@ export default function MoviesContent() {
   });
 
   useEffect(() => {
-    Promise.all([getMovieGenresList(), getMovies()])
+    Promise.all([getMovieGenresList(), getTvShows()])
       .then((resultsArray) => {
         resultsArray[0].map((itm) => {
           setCategories((categories) => [...categories, itm.name]);
         });
-        setMovies(resultsArray[1]);
+        setShows(resultsArray[1]);
       })
       .catch((err) => {
         setAlertDialog({
@@ -63,8 +63,8 @@ export default function MoviesContent() {
   const loadMore = () => {
     if (!loadingMore) {
       setLoadingMore(true);
-      getMovies(page).then((results) => {
-        setMovies((movies) => [...movies, ...results]);
+      getTvShows(page).then((results) => {
+        setShows((shows) => [...shows, ...results]);
       });
       setLoadingMore(false);
       setPage(page + 1);
@@ -79,7 +79,7 @@ export default function MoviesContent() {
           { fontFamily: fontsLoaded ? "Poppins_600SemiBold" : "" },
         ]}
       >
-        Movies
+        TV Shows
       </Text>
       {/* <View style={styles.chipsContainer}>
         <SelectableChips
@@ -102,20 +102,10 @@ export default function MoviesContent() {
           }
         }}
       >
-        {/* {categories.length !== 0 ? (
-          <Text
-            style={[
-              styles.textTitle,
-              { fontFamily: fontsLoaded ? "Poppins_600SemiBold" : "" },
-            ]}
-          >
-            Upcoming Movies
-          </Text>
-        ) : null} */}
-        {movies.map((movie, key) => (
+        {shows.map((show, key) => (
           <React.Fragment key={key}>
-            <ImageCard imageSrc={baseImageUrl + movie.poster_path} />
-            {key === movies.length - 1 ? (
+            <ImageCard imageSrc={baseImageUrl + show.poster_path} />
+            {key === shows.length - 1 ? (
               <View style={styles.loadingMoreWrapper}>
                 <ActivityIndicator animating color={colors.secondary} />
               </View>

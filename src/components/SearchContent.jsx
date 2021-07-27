@@ -115,7 +115,7 @@ export default function SearchContent() {
         });
     }
   };
-  // Add a label when no results
+
   const isCloseToBottom = ({
     layoutMeasurement,
     contentOffset,
