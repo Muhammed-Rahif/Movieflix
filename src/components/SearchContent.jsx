@@ -141,6 +141,7 @@ export default function SearchContent() {
         {searchFor
           ? results.map((result, key) => (
               <StandaloneCard
+                id={result.id}
                 bannerImageSrc={
                   baseImageUrl + result.backdrop_path
                     ? result.backdrop_path

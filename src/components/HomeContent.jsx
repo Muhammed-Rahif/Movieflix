@@ -124,7 +124,7 @@ export default function HomeContent() {
       {!loading ? (
         <>
           {/* Categories movies slides*/}
-          <Text
+          {/* <Text
             style={[
               styles.textTitle,
               { fontFamily: fontsLoaded ? "Poppins_600SemiBold" : "" },
@@ -140,7 +140,7 @@ export default function HomeContent() {
             {categories.map((category, key) => (
               <CategoryBubble name={category.name} id={category.id} key={key} />
             ))}
-          </ScrollView>
+          </ScrollView> */}
 
           {/* Most populars movies slides*/}
           <Text
@@ -158,6 +158,7 @@ export default function HomeContent() {
           >
             {populars.map((movie, key) => (
               <SlideCard
+                id={movie.id}
                 title={movie.title}
                 posterSrc={baseImageUrl + movie.poster_path}
                 key={key}
@@ -184,6 +185,7 @@ export default function HomeContent() {
           >
             {topRated.map((movie, key) => (
               <SlideCard
+                id={movie.id}
                 title={movie.title}
                 posterSrc={baseImageUrl + movie.poster_path}
                 key={key}
@@ -210,6 +212,7 @@ export default function HomeContent() {
           >
             {familyEntertainments.map((movie, key) => (
               <SlideCard
+                id={movie.id}
                 title={movie.title}
                 posterSrc={baseImageUrl + movie.poster_path}
                 key={key}
@@ -223,6 +226,7 @@ export default function HomeContent() {
           {/* Standalone card for random animations movie */}
           {randomActionMovie && (
             <StandaloneCard
+              id={randomActionMovie.id}
               bannerImageSrc={baseImageUrl + randomActionMovie.backdrop_path}
               title={randomActionMovie.title}
               subtitle={randomActionMovie.overview}
@@ -250,6 +254,7 @@ export default function HomeContent() {
           >
             {actions.map((movie, key) => (
               <SlideCard
+                id={movie.id}
                 title={movie.title}
                 posterSrc={baseImageUrl + movie.poster_path}
                 key={key}
@@ -276,6 +281,7 @@ export default function HomeContent() {
           >
             {animations.map((movie, key) => (
               <SlideCard
+                id={movie.id}
                 title={movie.title}
                 posterSrc={baseImageUrl + movie.poster_path}
                 key={key}
@@ -302,6 +308,7 @@ export default function HomeContent() {
           >
             {comedies.map((movie, key) => (
               <SlideCard
+                id={movie.id}
                 title={movie.title}
                 posterSrc={baseImageUrl + movie.poster_path}
                 key={key}
@@ -315,6 +322,7 @@ export default function HomeContent() {
           {/* Standalone card for random wars movie */}
           {randomWarMovie && (
             <StandaloneCard
+              id={randomWarMovie.id}
               bannerImageSrc={baseImageUrl + randomWarMovie.backdrop_path}
               title={randomWarMovie.title}
               subtitle={randomWarMovie.overview}
@@ -342,6 +350,7 @@ export default function HomeContent() {
           >
             {wars.map((movie, key) => (
               <SlideCard
+                id={movie.id}
                 title={movie.title}
                 posterSrc={baseImageUrl + movie.poster_path}
                 key={key}
@@ -368,6 +377,7 @@ export default function HomeContent() {
           >
             {musics.map((movie, key) => (
               <SlideCard
+                id={movie.id}
                 title={movie.title}
                 posterSrc={baseImageUrl + movie.poster_path}
                 key={key}
@@ -394,6 +404,7 @@ export default function HomeContent() {
           >
             {horrors.map((movie, key) => (
               <SlideCard
+                id={movie.id}
                 title={movie.title}
                 posterSrc={baseImageUrl + movie.poster_path}
                 key={key}
@@ -407,6 +418,7 @@ export default function HomeContent() {
           {/* Standalone card for random fantasy movie */}
           {randomFantasyMovie && (
             <StandaloneCard
+              id={randomFantasyMovie.id}
               bannerImageSrc={baseImageUrl + randomFantasyMovie.backdrop_path}
               title={randomFantasyMovie.title}
               subtitle={randomFantasyMovie.overview}
@@ -434,6 +446,7 @@ export default function HomeContent() {
           >
             {fantasies.map((movie, key) => (
               <SlideCard
+                id={movie.id}
                 title={movie.title}
                 posterSrc={baseImageUrl + movie.poster_path}
                 key={key}

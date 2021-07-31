@@ -114,7 +114,10 @@ export default function MoviesContent() {
         ) : null} */}
         {movies.map((movie, key) => (
           <React.Fragment key={key}>
-            <ImageCard imageSrc={baseImageUrl + movie.poster_path} />
+            <ImageCard
+              id={movie.id}
+              imageSrc={baseImageUrl + movie.poster_path}
+            />
             {key === movies.length - 1 ? (
               <View style={styles.loadingMoreWrapper}>
                 <ActivityIndicator animating color={colors.secondary} />

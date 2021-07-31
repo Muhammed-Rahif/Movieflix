@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   ImageBackground,
   StyleSheet,
@@ -14,9 +14,10 @@ import {
   Poppins_600SemiBold,
 } from "@expo-google-fonts/poppins";
 import { AirbnbRating } from "react-native-ratings";
-import { useEffect } from "react";
+import { ViewModalMovieContext } from "../contexts/Contexts";
 
 export default function StandaloneCard({
+  id,
   bannerImageSrc = "",
   title = "",
   subtitle = "",
@@ -34,8 +35,18 @@ export default function StandaloneCard({
     Poppins_600SemiBold,
   });
 
+  const { setViewMovieModal } = useContext(ViewModalMovieContext);
+
   return (
-    <TouchableNativeFeedback>
+    <TouchableNativeFeedback
+      onPress={() => {
+        setViewMovieModal({
+          open: true,
+          id,
+          type: mediaType === "Movie" ? "movie" : "tv",
+        });
+      }}
+    >
       <Card style={styles.card}>
         <Text
           style={[

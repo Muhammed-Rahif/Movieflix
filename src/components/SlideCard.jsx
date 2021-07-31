@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   ImageBackground,
   StyleSheet,
@@ -15,8 +15,10 @@ import {
 } from "@expo-google-fonts/poppins";
 import { AirbnbRating } from "react-native-ratings";
 import { Image } from "react-native";
+import { ViewModalMovieContext } from "../contexts/Contexts";
 
 export default function SlideCard({
+  id,
   title = "",
   posterSrc = "",
   rating = 0,
@@ -25,13 +27,19 @@ export default function SlideCard({
 }) {
   const [imageLoading, setImageLoading] = useState(true);
 
+  const { setViewMovieModal } = useContext(ViewModalMovieContext);
+
   let [fontsLoaded] = useFonts({
     Poppins_600SemiBold,
     Poppins_400Regular,
   });
 
   return (
-    <TouchableNativeFeedback>
+    <TouchableNativeFeedback
+      onPress={() => {
+        setViewMovieModal({ open: true, id });
+      }}
+    >
       <Card style={styles.card}>
         {/* <Card.Cover source={{ uri: posterSrc }} style={styles.cardImage} /> */}
         <ImageBackground
