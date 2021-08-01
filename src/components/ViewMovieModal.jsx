@@ -70,7 +70,7 @@ export default function ViewMovieModal() {
       hideModal();
     }
   }, [viewMovieModal.id]);
-
+  console.log({ details });
   return (
     <Portal>
       <Modal
@@ -139,7 +139,7 @@ export default function ViewMovieModal() {
               >
                 {viewMovieModal.type === "movie"
                   ? convertMinsToHrsMins(details.runtime) + "Hours"
-                  : details?.networks[0]?.name
+                  : details.networks
                   ? details.networks[0].name
                   : details.tagline}{" "}
                 |{" "}

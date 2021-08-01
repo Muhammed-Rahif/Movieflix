@@ -37,7 +37,7 @@ export default function SlideCard({
   return (
     <TouchableNativeFeedback
       onPress={() => {
-        setViewMovieModal({ open: true, id });
+        setViewMovieModal({ open: true, id, type: "movie" });
       }}
     >
       <Card style={styles.card}>
