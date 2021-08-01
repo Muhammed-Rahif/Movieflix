@@ -138,7 +138,7 @@ export default function ViewMovieModal() {
                 ]}
               >
                 {viewMovieModal.type === "movie"
-                  ? convertMinsToHrsMins(details.runtime) + "Hours"
+                  ? convertMinsToHrsMins(details.runtime) + " Hours"
                   : details.networks
                   ? details.networks[0].name
                   : details.tagline}{" "}
