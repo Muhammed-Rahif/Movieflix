@@ -1,7 +1,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <a href="https://muhammed-rahif.github.io/Netflix-Clone/" target="_blank">
+  <a href="https://github.com/Muhammed-Rahif/Movieflix/" target="_blank">
     <img src="assets/Logos/Movieflix-minimal-logo-shadow.png" alt="Logo" width="120">
   </a>
 
