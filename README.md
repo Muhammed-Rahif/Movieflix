@@ -23,12 +23,12 @@
 ## 📱️ Screenshots <a name = "screenshots"></a>
 
 <div align="center">
-  <img width="33%" src="assets/Screenshots/shot-1.jpg" alt="Shot 1" />
-  <img width="33%" src="assets/Screenshots/shot-2.jpg" alt="Shot 2" />
-  <img width="33%" src="assets/Screenshots/shot-3.jpg" alt="Shot 3" />
-  <img width="33%" src="assets/Screenshots/shot-4.jpg" alt="Shot 4" />
-  <img width="33%" src="assets/Screenshots/shot-5.jpg" alt="Shot 5" />
-  <img width="33%" src="assets/Screenshots/shot-6.jpg" alt="Shot 6" />
+  <img width="32.5%" src="assets/Screenshots/shot-1.jpg" alt="Shot 1" />
+  <img width="32.5%" src="assets/Screenshots/shot-2.jpg" alt="Shot 2" />
+  <img width="32.5%" src="assets/Screenshots/shot-3.jpg" alt="Shot 3" />
+  <img width="32.5%" src="assets/Screenshots/shot-4.jpg" alt="Shot 4" />
+  <img width="32.5%" src="assets/Screenshots/shot-5.jpg" alt="Shot 5" />
+  <img width="32.5%" src="assets/Screenshots/shot-6.jpg" alt="Shot 6" />
 </div>
 
 ## ⛏️ Built Using <a name = "built_using"></a>
